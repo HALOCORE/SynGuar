@@ -1,0 +1,16 @@
+String
+String
+Int
+------
+"An example string with _username in it RT _AwesomeUser says _username is awesome"
+"username"
+2
+------
+"An example string with _username in it RT _AwesomeUser says _username is awesome"
+"AwesomeUser"
+1
+------
+"An _example string with _example in it is awesome _example"
+"example"
+3
+$$$$$$

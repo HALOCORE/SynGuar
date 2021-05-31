@@ -1,0 +1,4 @@
+
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 = (str.++ (str.at input1 I.0) (str.++ input0 S."_acme.com"));
+

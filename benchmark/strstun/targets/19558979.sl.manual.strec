@@ -1,0 +1,5 @@
+# 0
+
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 = (str.at (str.++ S." " input0) input1);
+

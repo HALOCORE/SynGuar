@@ -1,0 +1,4 @@
+
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 = (str.substr input0 input1 I.-1);
+

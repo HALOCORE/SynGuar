@@ -1,0 +1,9 @@
+# 0
+# might equivalent to a shorter one.
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.contains input0 S."/n")
+then (str.substr input0 (+ (+ (str.indexof input0 S."/n" I.-1) I.1) I.1) I.-1)
+else input0;
+

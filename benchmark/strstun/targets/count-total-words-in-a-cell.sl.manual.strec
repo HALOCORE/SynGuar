@@ -1,0 +1,6 @@
+# 0
+# require 10 components
+
+SYNFUNC :: Str -> (Int);
+SYNFUNC input0 = (+ (- (str.len input0) (str.len (str.replace input0 S." " S.""))) I.1);
+

@@ -1,0 +1,9 @@
+String
+String
+------
+"ABCDE/FGHI/JKL/MNOPQR"
+"MNOPQR"
+------
+"A/ABCDE/FGHI/JKL"
+"JKL"
+$$$$$$

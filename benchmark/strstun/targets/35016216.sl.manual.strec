@@ -1,0 +1,9 @@
+# 0
+
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 = 
+    if (str.prefixof S."C0" input0)
+    then input0
+    else input1;
+
+

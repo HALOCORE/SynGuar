@@ -1,0 +1,1 @@
+Concats(UpperCase(SubString(x, RelPos(x, (^\s*, .*?, 0, 0)), RelPos(x, (^\s*, .*?, 0, 1))), x), LowerCase(SubString(x, RelPos(x, (^\s*, .*?, 0, 1)), RelPos(x, (.*?, \s*$, 0, 0))), x))

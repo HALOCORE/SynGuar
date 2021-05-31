@@ -1,0 +1,36 @@
+String
+String
+String
+String
+Bool
+------
+"red ball, green sweater"
+"red"
+"green"
+"pink"
+true
+------
+"pink ball, green sweater"
+"red"
+"green"
+"pink"
+false
+------
+"blue sea, pink ribbon"
+"red"
+"blue"
+"pink"
+false
+------
+"black sea, white ribbon"
+"red"
+"blue"
+"pink"
+false
+------
+"red green blue"
+"red"
+"blue"
+"pink"
+true
+$$$$$$

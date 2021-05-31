@@ -1,0 +1,7 @@
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.suffixof (int.to.str I.0) input0)
+then (str.++ S." " (str.substr input0 I.0 (- (str.len input0) I.3)))
+else (str.replace input0 (int.to.str (str.to.int input0)) S."");
+

@@ -1,0 +1,2 @@
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 = (str.replace input0 (int.to.str input1) S."NUM");

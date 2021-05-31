@@ -1,0 +1,7 @@
+# 0
+# require 10 components
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+    (str.substr input0 (+ (str.indexof input0 S."_" I.0) (str.to.int S."2")) I.-1);
+

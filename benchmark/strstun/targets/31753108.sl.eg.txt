@@ -1,0 +1,12 @@
+String
+String
+------
+"Tire Pressure ABC123873 Monitor"
+"ABC123873"
+------
+" Oil Life ABC849999999021 gauge"
+"ABC849999999021"
+------
+" Air conditioner GHF211 maintenance"
+"GHF211"
+$$$$$$

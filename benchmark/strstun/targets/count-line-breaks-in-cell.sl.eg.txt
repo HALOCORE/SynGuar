@@ -1,0 +1,12 @@
+String
+Int
+------
+"one"
+1
+------
+"one/ntwo"
+2
+------
+"one/ntwo/nthree"
+3
+$$$$$$

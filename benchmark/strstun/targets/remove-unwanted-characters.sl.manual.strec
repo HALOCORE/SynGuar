@@ -1,0 +1,4 @@
+
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 = (str.replace input0 input1 S."");
+

@@ -1,0 +1,16 @@
+String
+String
+Bool
+------
+"An apple a day keeps the doctor away"
+"apple"
+true
+------
+"An apple a day keeps the doctor away"
+"orange"
+false
+------
+"Better the devil you know"
+"you know"
+true
+$$$$$$

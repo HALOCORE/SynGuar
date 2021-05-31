@@ -1,0 +1,1 @@
+LowerCase(SubString(x, RelPos(x, (^\s*, .*?, 0, 0)), RelPos(x, (\w+, .*?, 0, 0))), x)

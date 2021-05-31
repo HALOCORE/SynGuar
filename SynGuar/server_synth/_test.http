@@ -1,0 +1,104 @@
+###
+GET http://localhost:5261/status/perf
+
+###
+GET http://localhost:5261/status/tasks
+
+###
+GET http://localhost:5261/status/workers
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1029.csv",
+    "example_size": 28,
+    "keepalive": 12,
+    "no_counting": false
+}
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1001.csv",
+    "example_size": 6,
+    "keepalive": 12,
+    "no_counting": false
+}
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1001.csv",
+    "example_size": 1,
+    "keepalive": 12,
+    "no_counting": false
+}
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1001.csv",
+    "example_size": 8,
+    "keepalive": 16,
+    "no_counting": false
+}
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1005.csv",
+    "example_size": 29,
+    "keepalive": 16,
+    "no_counting": false
+}
+
+###################### 
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "19558979.seed0.eg.txt",
+    "example_size": 20,
+    "keepalive": 0,
+    "no_counting": true
+}
+
+### 
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "19558979.seed0.eg.txt",
+    "example_size": 20,
+    "keepalive": 0,
+    "no_counting": false
+}
+
+###
+POST http://localhost:5261/synth
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "19558979.seed0.eg.txt",
+    "example_size": 349,
+    "keepalive": 0,
+    "no_counting": true
+}

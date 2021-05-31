@@ -1,0 +1,1 @@
+Concats(SubString(x, RelPos(x, (.*?, [A-Z]+, 0, 0)), RelPos(x, (.*?, [A-Z]+, 0, 1))), Concats(ConstStr(". "), SubString(x, RelPos(x, (.*?, [A-Z]+, 1, 0)), RelPos(x, (.*?, [A-Z]+, 1, 1)))))

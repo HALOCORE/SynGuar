@@ -1,0 +1,6 @@
+input0,output
+ssh lisa ,ssh lisa@univ.edu 
+ sftp  lisa,sftp lisa@univ.edu  
+ssh 'df -H' bob,ssh bob@univ.edu 'df -H' 
+---sshfs onion---,sshfs onion@univ.edu 
+

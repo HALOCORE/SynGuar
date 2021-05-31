@@ -1,0 +1,16 @@
+String
+String
+Int
+------
+"The fox jumped over the fox"
+"fox"
+2
+------
+"The fox jumped over the fox"
+"ox"
+2
+------
+"The fox jumped over the fox"
+"Fox"
+0
+$$$$$$

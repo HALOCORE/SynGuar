@@ -1,0 +1,6 @@
+# 0
+# require 12 components.
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 = (str.substr input0 (+ (+ (str.indexof input0 S."=" I.0) I.1) I.1) (str.len input0));
+

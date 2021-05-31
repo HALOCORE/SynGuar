@@ -1,0 +1,12 @@
+String
+String
+------
+"  The shawshank"
+"The shawshank"
+------
+"The    godfather"
+"The godfather"
+------
+"    pulp   fiction"
+"pulp fiction"
+$$$$$$

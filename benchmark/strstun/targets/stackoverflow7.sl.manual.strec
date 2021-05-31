@@ -1,0 +1,8 @@
+
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 =
+if (str.suffixof (str.++ S." " input1) input0)
+then (str.replace input0 (str.++ S." " input1) S."")
+else (str.replace input0 input1 S.""); 
+
+

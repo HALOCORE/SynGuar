@@ -1,0 +1,8 @@
+
+SYNFUNC :: Str -> Str -> Str -> (Str);
+SYNFUNC input0 input1 input2 = 
+    if (== (str.len (str.replace input1 input2 S."")) I.0)
+    then input1
+    else input0;
+
+

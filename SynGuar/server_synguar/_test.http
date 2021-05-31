@@ -1,0 +1,133 @@
+###
+GET http://localhost:5262/sessions/ids
+
+###
+GET http://localhost:5262/sessions/running
+
+###
+GET http://localhost:5262/sessions/waiting
+
+###
+GET http://localhost:5262/sessions/trace/StrPROSE|prog1.seed1019.csv|0.05|0.02|1
+
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1010.csv",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 1
+}
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog1.seed1010.csv",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 1
+}
+
+### Strange, when running e=0.1, Worker is created.
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog14.seed14016.csv",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 1
+}
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog14.seed14016.csv",
+    "epsilon": 0.1,
+    "delta": 0.02,
+    "k": 1
+}
+
+### Strange, when running e=0.1, Worker is created.
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog14.seed14028.csv",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 1
+}
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrPROSE",
+    "example_file": "prog14.seed14028.csv",
+    "epsilon": 0.1,
+    "delta": 0.02,
+    "k": 1
+}
+
+### StrSTUN
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "19558979.seed23.eg.txt",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 20
+}
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "33619752.seed13.eg.txt",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 20
+}
+
+###
+POST http://localhost:5262/synguar
+content-type: application/json
+
+{
+    "synthesizer": "StrSTUN",
+    "example_file": "change-negative-numbers-to-positive.seed13.eg.txt",
+    "epsilon": 0.05,
+    "delta": 0.02,
+    "k": 20
+}
+
+###
+GET http://localhost:5262/sessions/running
+
+###
+GET http://localhost:5262/sessions/waiting
+
+
+###
+GET http://localhost:5262/sessions/trace/prog1.seed1000.csv

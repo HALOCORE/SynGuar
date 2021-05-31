@@ -1,0 +1,31 @@
+
+.top-provider {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-middlewidth {
+    min-width: 275px;
+    background-color: seashell;
+}
+
+.card-title {
+    font-size: 14
+}
+
+.card-subtitle {
+    margin-bottom: 12,
+}
+
+.text-inline {
+    display: inline;
+}
+
+.panel-waiting-tasks,
+.panel-failure-info {
+    margin: 20px;
+}
+
+.text-list-item-head-sup {
+    color: darkblue;
+}

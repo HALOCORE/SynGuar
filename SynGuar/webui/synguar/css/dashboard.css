@@ -1,0 +1,34 @@
+
+.top-provider {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-middlewidth {
+    min-width: 275px;
+    background-color: seashell;
+}
+
+.card-title {
+    font-size: 14
+}
+
+.card-subtitle {
+    margin-bottom: 12,
+}
+
+.text-inline {
+    display: inline;
+}
+
+.block-inline {
+    display: inline-block;
+}
+
+.panel-sessions-list {
+    margin-top: 10px;
+}
+
+.margin-right-medium {
+    margin-right: 20px;
+}

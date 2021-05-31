@@ -1,0 +1,9 @@
+String
+Bool
+------
+"dhfjd9999999dfda"
+true
+------
+"ddsss999dfdfsfd"
+false
+$$$$$$

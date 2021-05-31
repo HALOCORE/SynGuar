@@ -1,0 +1,15 @@
+String
+String
+------
+"USD.EUR<IDEALPRO,CASH,EUR>"
+"EUR"
+------
+"USD.EUR<IDEALPRO,CASH,USD>"
+"USD"
+------
+"KOR.JPN<IDEALPRO,CASH,WON>"
+"WON"
+------
+"KOR.JPN<IDEALPRO,CASH,YEN>"
+"YEN"
+$$$$$$

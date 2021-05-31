@@ -1,0 +1,9 @@
+# 0
+# not very manual
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.contains input0 (str.++ (str.at input0 I.-1) S."/"))
+then (str.substr input0 I.0 (str.indexof input0 S."/" I.2))
+else (str.++ (str.substr input0 I.0 (str.indexof input0 S."/" I.2)) S."/");
+

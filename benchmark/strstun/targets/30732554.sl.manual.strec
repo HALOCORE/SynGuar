@@ -1,0 +1,8 @@
+# 0
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.contains input0 S."|")
+then (str.substr (str.++ S." " input0) I.1 (str.indexof input0 S."|", I.0))
+else input0;
+

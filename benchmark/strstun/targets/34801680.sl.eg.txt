@@ -1,0 +1,9 @@
+String
+String
+------
+"Name= ABC Retailers"
+"ABC Retailers"
+------
+" ame= XYZ Suppliers"
+"XYZ Suppliers"
+$$$$$$

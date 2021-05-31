@@ -1,0 +1,10 @@
+# 0
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.contains input0 S."Corporation")
+    then (str.replace input0 (str.++ S." " S."Corporation") S."")
+    else if (str.contains input0 S."Enterprises") 
+        then (str.replace input0 (str.++ S." " S."Enterprises") S."")
+        else (str.replace (str.replace input0 S."Inc" S."Company") (str.++ S." " S."Company") S."");
+

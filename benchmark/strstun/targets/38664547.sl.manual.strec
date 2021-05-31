@@ -1,0 +1,8 @@
+# 0
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 = 
+    if (== (str.len input0) (str.len S."that"))
+    then input0
+    else (str.replace input0 S."that" S."");
+

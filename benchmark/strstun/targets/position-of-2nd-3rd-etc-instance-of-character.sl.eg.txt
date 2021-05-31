@@ -1,0 +1,15 @@
+String
+String
+Int
+Int
+------
+"100x15x50"
+"x"
+2
+7
+------
+"cat-in-the-hat"
+"-"
+3
+11
+$$$$$$

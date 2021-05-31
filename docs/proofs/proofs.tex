@@ -1,0 +1,259 @@
+\documentclass[11pt]{extarticle}
+\usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,mathtools}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tcolorbox}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xspace}
+\usepackage{hyperref}
+
+\usepackage{tabularx}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{definition}{Definition}
+
+
+\hypersetup{
+    colorlinks=true,
+    citecolor=blue,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{xcolor, soul}
+\newcommand{\note}[1]{\textcolor{purple}{\small {#1}}}
+\newcommand{\tool}{{\sc SynGuar}\xspace}
+\newcommand{\toolvsa}{{\sc SynGuar-PROSE}\xspace}
+\newcommand{\toolstun}{{\sc SynGuar-STUN}\xspace}
+\newcommand{\parf}{g}
+
+\newcommand{\distrib}{D}
+\newcommand{\programsp}{H_S}
+\newcommand{\samples}[2]{m_\programsp({#1}, {#2})}
+\newcommand{\synthalgo}{\mathcal{A}(S)}
+\newcommand{\etal}{et al.\xspace}
+\newcommand{\concept}{\mathcal{C}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\newcommand{\prb}{\mathop{\text{Pr}}}
+\newcommand{\prbh}{\mathop{\text{Pr}}_{h_A\in H}}
+\newcommand{\ep}{\mathop{\mathbb{E}}}
+\newcommand{\var}{\textsf{Var}}
+\newcommand{\cov}{\textsf{Cov}}
+\newcommand{\ind}{\mathop{\mathbb{I}}}
+\newcommand{\sothat}{\text{ s.t. }}
+
+\usepackage[numbers]{natbib}
+
+\title{Mathematical Proofs for \tool}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Preliminaries}
+
+\paragraph{A starting point.} The number of examples provably sufficient to achieve the $(\epsilon, \delta)$-generalization is given by Blumer \etal~\cite{blumer1987occam}. We restate this result, which computes sample complexity as a function of $(\epsilon,\delta)$ and the capacity (or size) of any given hypothesis space $H$.
+
+\begin{theorem}[Sample Complexity for $(\epsilon, \delta)$-synthesis]
+  \label{thm:static-union-bound}
+For all $\epsilon \in (0,\frac{1}{2})$, $\delta\in
+(0,\frac{1}{2})$, and hypothesis space $H$ which contains the target program $t \in H$, a synthesis algorithm $\synthalgo$ which outputs functions consistent with $n$ i.i.d samples is an $(\epsilon, \delta)$-synthesizer, if 
+\begin{align*}
+  n > \frac{1}{\epsilon}(\ln |H| + \ln
+  \frac{1}{\delta})
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+Assume the true concept is $f$ and all I/O examples are consistent with $f$.
+Now consider a single hypothesis $h\in H$ first.
+Let $L_{(\mathcal{D},f)}(h)$ be the true error (expectation of 0-1 loss) $L_{(\mathcal{D},f)}(h)=\mathop{\mathbb{E}}_{x\sim\mathcal{D}}\mathbb{I}[f(x)\neq h(x)]$,
+and let $L_{(\mathcal{S},f)}(h)$ be the emperical error (emperical average of 0-1 loss) $L_{(\mathcal{S},f)}(h)=\frac{1}{|S|}\sum_{x\in S}\mathbb{I}[f(x)\neq h(x)]$,
+The following holds:
+\begin{align*}
+\prb_{x\in \mathcal{D}} [\mathbb{I}[f(x)\neq h(x)] = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq (1-\epsilon)
+\end{align*}
+Now consider a sample $S$ with size $n$, the following holds:
+\begin{align*}
+\prb_{S\in \mathcal{D}^{n}} [L_{(\mathcal{S},f)}(h) = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq (1-\epsilon)^{n}
+\end{align*}
+
+Then take union bound on all hypothesis in $H$:
+\begin{align*}
+    &\prb_{S\in \mathcal{D}^{n}} [\exists h\in H, ~L_{(\mathcal{S},f)}(h) = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq |H|(1-\epsilon)^{n} < \delta\\
+    \Rightarrow & ~n > \frac{1}{\epsilon}(\ln |H| + \ln
+    \frac{1}{\delta}) \text{ suffices}
+\end{align*}
+
+So with sample size larger than $\frac{1}{\epsilon}(\ln |H| + \ln
+\frac{1}{\delta})$, with probability at least $1-\delta$, all $h\in H$ that 
+have true error larger than $\epsilon$ have non-zero emperical loss and will be ruled out
+and any hypothesis in $H$ that is still consistent with the sample has 
+true error smaller than $\epsilon$.
+
+\end{proof}
+
+\section{Analysis of \tool}
+
+\begin{algorithm}[t]
+    \caption{\tool Synthesis returns a program with error smaller than $\epsilon$ with probability higher than $1-\delta$}
+    \label{alg:main}
+    \begin{algorithmic}[1]
+      \Procedure{\tool}{$\epsilon, \delta$}
+      \State $k = 10$ // tunable parameter
+      \State $g \gets \Call{PickStoppingCond}{}$ \label{alg:pick-cond}
+      \State $S' \gets \varnothing, s \gets 0$
+      \State $size_{H} \gets \Call{ComputeSize}{H}$ \label{alg:call-compute} 
+      \State $n \gets g(size_{H})$
+      %\While {$|S'| \leq n$}
+      \While {$s \leq n$}
+      \State $S' \gets S' \cup \Call{sample}{k}$
+      \State $H_{S'} \gets $ \Call{UpdateHypothesis}{$S'$} \label{alg:call-update}
+      %\State $H_{S'}$ = synthesize($S'$)
+      \State $size_{H_{S'}} \gets \Call{ComputeSize}{H_{S'}}$ \label{alg:call-compute}
+      \State $s \gets s + k$
+      \State $n \gets min(n, s+g(size_{H_{S'}}))$ \label{alg:min-thresh}
+      \EndWhile
+      \State $m_{H_{S'}}=\frac{1}{\epsilon}(\ln{size_{H_{S'}}} + ln{\frac{1}{\delta}})$
+      \State $T \gets \Call{sample}{m_{H_{S'}}(\epsilon, \delta)}$
+      \State $S \gets S'\cup T$ 
+      \State \Return $f$ program in $H_S$
+      \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\tool's design is motivated by being able to give a formal generalization guarantee and a bounded sample complexity. For this purpose, we state and prove the following properties: 
+% Here, we detail and prove these properties.
+
+\paragraph{(P1: Termination)} \tool always terminates for a finite $|H|$.
+
+\paragraph{(P2: $(\epsilon, \delta)$ guarantees)} If \tool returns an $f$ then $f$ is $\epsilon$-far with probability $<\delta$.
+
+\paragraph{(P3: Sample complexity)} \tool's sample complexity is always within 2$\times$ of the optimal.
+
+\begin{theorem}[P1]
+\label{thm:p1}
+\tool always terminates for a finite $|H|$.
+\end{theorem}
+\begin{proof}
+It suffices to prove that the sampling phase (lines $7-13$) of \tool terminates in order to show that \tool terminates.
+%The phase can be concisely written as follows:
+In each iteration of the sampling phase,  let $S$ be the queue storing the user-provided examples, $S_i = S_{i-1}\cup\{s_1,...s_k\}$. For each $S_i$, $H_{S_i}$ determines the set of consistent hypothesis that satisfy $S_i$. Let $N_i$ be the number of I/O examples needed for generalization after iteration $i$. 
+% Let $S'$ be the user provided examples. The examples are provided one by one, until $|S'| = N_{\parf}(H,0,\infty,\Phi)$, where $N_{\parf}(H,s,n,Q)$ is defined as:
+% {\small
+%     \begin{align*}
+%     &N_{\parf}(H,s,n,Q) = 
+%     \begin{cases}
+%     n & \text{if } |Q| = 0\\
+%     s + 1  & \text{if } |H_{Q}|=0\\
+%     N_{\parf}(H_{Q}, ~s + k, \\
+%     ~\min\lbrace n,~s + k + \parf(|H_{Q}|)\rbrace, \\
+%     Q\cup \{q_1,...q_k\}) & \text{if } |Q|>0\\https://www.overleaf.com/project/600a6d81177355d696fc6590
+%     \end{cases}\\
+%     &\text{Where } \{q_1,...q_k\} \text{ is the next k samples }
+%     \end{align*}
+% }
+%
+For iterations $i$ and $j$ where $i<j$ and $\forall g:\mathbb{N} \rightarrow \mathbb{Z}$ such that $g$ is monotonically non-decreasing, the following holds: 
+\begin{align*}
+  S_i\subset S_j &\Rightarrow |H_{S_j}|\leq |H_{S_i}| \Rightarrow g(|H_{S_j}|) \leq g(|H_{S_i}|)\\
+  &\Rightarrow N_j \leq N_i\text{ (see line $10$ in Alg.~\ref{alg:main})}
+\end{align*}
+Therefore, if $N_1 = g(|H|)$ then in the worst case the loop will terminate at some iteration $p$ such that $|S_p|\geq N_1$.
+%Therefore, if $N_1 = g(|H|)$ then in the worst case the loop will terminate at some iteration $p$ such that the queue stores more than $N_1$ examples, $|S_p|\geq N_1$.
+\end{proof}
+
+\begin{theorem}[P2]
+\label{thm:p2}
+If \tool($\epsilon, \delta$) returns the synthesized program $f$ then $f$ is $\epsilon$-far with probability $<\delta$.
+\end{theorem}
+\begin{proof}
+By Theorem~\ref{thm:p1}, we know that the sampling phase terminates with $S'$ samples (see line $14$). In lines $14-16$ \tool samples an additional number of I/O examples required to generalize and then synthesizes a program after seeing the additional samples. Therefore, Theorem~\ref{thm:p2} follows from Theorem~\ref{thm:static-union-bound}.
+\end{proof}
+% ====================================================
+
+% \begin{theorem}{Sample Complexity}
+%     \tool's sample complexity is within
+% $2\times$ of the optimal.
+% \end{theorem}
+
+% % The last property (P3) of \tool is that its sample complexity is within
+% % $2\times$ of the optimal. The optimal number of samples is determined by the
+% % shortest length prefix that guarantees that the algorithm returns with
+% % $(\epsilon, \delta)$ guarantees.
+% \begin{proof}
+
+% \end{proof}
+In order to prove the last property, we define a new quantity $\omega(Q)$. It is the smallest sample size taken by \tool($\epsilon, \delta$) for any non-decreasing $g$ used for a sequence of I/O examples $Q$.
+
+\begin{definition}[Smallest dynamic sample size]
+    For any infinite sampled sequence of examples $Q$, let $\Call{Prefix}{Q,g}$ be the prefix of $Q$ at which \tool($\epsilon, \delta$) terminates. Then,  
+    % In other word, it is like that the best  stopping condition that result in smallest sample size is known before seeing the examples.
+    $$
+    \omega(Q) = \inf \{ |m_g|~:~\forall g,\text{ } m_g = \Call{Prefix}{Q,g}\}
+    $$
+\end{definition}
+
+% Note that if we modify \tool to always take $\omega(Q)$ examples when the sampled sequence is $Q$, it is not an $(\epsilon,\delta)$-synthesizer.
+
+\begin{theorem}[P3]
+\label{thm:p3}
+    \tool uses no more than $2\omega(Q)$ examples on any $Q$ with $\parf_{0}(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(\frac{1}{\delta}))\}$.
+\end{theorem}
+To save space, we provide the proof in supplementary material.
+\begin{proof}
+Let $S'\subset Q$ be the samples in sampling phase. Let $P$ be the samples when $\omega(Q)=\Call{Prefix}{Q,g}$ for some $g$ and let us call this the best stopping point for \tool's sampling phase on $Q$. Then $\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{size_{H_{P}}} + ln{\frac{1}{\delta}})$ where $size_{H_{P}}= \Call{ComputeSize}{H_{P}}$.
+
+There are two cases to analyze. 1) If \tool's phase $1$ finishes before the best stopping point and 2) if \tool's phase $1$ finishes after the best stopping point. We observe that in both cases the $m_{g_0}\le\omega(Q)$. 
+The full proof is the following:
+
+Let $\parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\}$, $\gamma(Q) = \Call{Prefix}{Q,\parf_0}$ and $S'\subset Q$ be the samples in sampling phase.
+
+If $P$ be the samples for best stopping point then
+
+$\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{|H_P} + ln{\frac{1}{\delta}})$
+
+\noindent Case 1: \tool using $\parf_0$ is stopping earlier in phrase 1 than the best possible stopping point, $|S'| < |P|$
+\begin{align*}
+    \gamma(Q) - 2\cdot\omega(Q) &= |S'|- 2\cdot|P| +  \frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - 2\cdot \log{|H_{P}|})\\ 
+    &- \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}}\\
+    & \leq -|P| - \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}} + \frac{1}{\epsilon}\cdot(\log{|H_{S'}|})\\
+    &\text{since }|S'| < |P|
+\end{align*}
+Observe that, for $\parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\} $ the 
+$|S'| \geq \frac{1}{\epsilon}\cdot(\log{|H_{S'}|}-\log{\frac{1}{\delta}})$ (see, step $9$ in Algorithm $2$)
+\begin{align*}
+    \gamma(Q) - 2\cdot\omega(Q) &\leq 0
+\end{align*}
+
+\noindent Case 2: \tool using $\parf_0$ is stopping after the best possible stopping point in phrase 1, $|H_{P}|\ge|H_{S'}|$.
+
+Observe that $|S'| \le \omega(Q)$. Because for \tool using $\parf_0$, after seeing $P$, it will take no more than $\parf_0(|H_{P}|)=\frac{1}{\epsilon}(\ln{|H_{P}|} - ln{\frac{1}{\delta}})$ examples in phase 1.
+\begin{align*}
+    |S'| &\le |P| + \parf_0(|H_{P}|)\\
+    \omega(Q) &= |P| + \frac{1}{\epsilon}(\ln{|H_{P}|} + ln{\frac{1}{\delta}})\\
+    &\implies |S'| \le \omega(Q)
+\end{align*}
+Now,
+\begin{align*}
+    \gamma(Q) - 2\cdot\omega(Q) &= |S'|- 2\cdot|P| +  \frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - 2\cdot \log{|H_{P}|}) \\
+    &- \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}}\\
+    \text{Substituting, }|S'|&\leq|P|+\frac{1}{\epsilon}(\log{|H_{P}|}+\log{\frac{1}{\delta}})\\
+    &\leq -|P| +\frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - \log{|H_{P}|})\\
+    &\leq 0\text{ since, }|H_{P}|\ge|H_{S'}|
+\end{align*}
+\end{proof}
+
+\bibliographystyle{plainnat}
+\bibliography{proofs}
+
+\end{document}

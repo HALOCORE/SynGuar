@@ -1,0 +1,7 @@
+
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 =
+if (== input1 I.1)
+then (str.substr input0 I.0 (str.indexof input0 S."-" I.0))
+else (str.substr input0 (+ I.1 (str.indexof input0 S."-" I.0)) I.-1);
+

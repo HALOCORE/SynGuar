@@ -1,0 +1,12 @@
+String
+String
+String
+------
+"susan"
+"chang"
+"susan chang"
+------
+"aaron"
+"kim"
+"aaron kim"
+$$$$$$

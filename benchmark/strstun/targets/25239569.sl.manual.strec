@@ -1,0 +1,6 @@
+# 0
+# require 10 components.
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 = (str.replace (str.replace (str.replace input0 S."BRD" S."Branding") S."LDS" S."Leads") S."DRS" S."Direct Response");
+

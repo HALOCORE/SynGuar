@@ -1,0 +1,9 @@
+String
+String
+------
+"valentine day=1915=50==7.1=45"
+"valentine day"
+------
+"movie blah=2blahblah, The=1914=54==7.9=17"
+"movie blah=2blahblah, The"
+$$$$$$

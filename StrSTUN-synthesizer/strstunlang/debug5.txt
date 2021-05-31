@@ -1,0 +1,2 @@
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 = (str.++ (str.at input0 I.1) (str.substr input0 input1 I.5));

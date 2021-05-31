@@ -1,0 +1,10 @@
+# require 14 components
+
+SYNFUNC :: Str -> Str -> (Int);
+SYNFUNC input0 input1 =
+if (== (- (str.len input0) (str.len (str.replace input0 input1 S.""))) (str.len input1))
+then I.1
+else if (== (- (str.len input0) (str.len (str.replace input0 input1 S.""))) (+ (str.len input1) (str.len input1)))
+then I.2
+else I.3;
+

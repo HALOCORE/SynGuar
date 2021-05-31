@@ -1,0 +1,4 @@
+
+SYNFUNC :: Str -> Str -> Str -> (Str);
+SYNFUNC input0 input1 input2 = (str.++ input0 (str.++ S."/n" (str.++ input1 (str.++ S."/n" input2))));
+

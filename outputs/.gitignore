@@ -1,0 +1,4 @@
+*.tar.gz
+*.zip
+cache/*Copy
+cache/synth-mem.json

@@ -1,0 +1,10 @@
+# 0
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (== (str.len input0) (str.len (str.replace input0 S."%" S."")))
+then (str.substr input0 I.0 I.3)
+else if (str.suffixof (int.to.str I.9) input0)
+    then (str.substr input0 (+ (str.indexof input0 S."%" I.0) I.1) I.-1)
+    else (str.substr input0 (+ (str.indexof input0 S."%" I.0) I.1) I.3);
+

@@ -1,0 +1,12 @@
+String
+Int
+------
+"The"
+3
+------
+"The quick fox"
+13
+------
+"The quick  fox"
+14
+$$$$$$

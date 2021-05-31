@@ -1,0 +1,12 @@
+String
+String
+Bool
+------
+"ABC"
+"D"
+false
+------
+"ABC"
+"BC"
+true
+$$$$$$

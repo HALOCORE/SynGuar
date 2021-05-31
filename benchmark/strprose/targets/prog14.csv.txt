@@ -1,0 +1,1 @@
+Concats(ConstStr("i"), Concats(UpperCase(SubString(x, RelPos(x, (.*?, \w+, 0, 0)), RelPos(x, (.*?, \w+, 0, 1))), x), SubString(x, RelPos(x, (.*?, \w+, 0, 1)), RelPos(x, (\w+, .*?, 0, 0)))))

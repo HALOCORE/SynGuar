@@ -1,0 +1,12 @@
+# 0
+# weird
+
+SYNFUNC :: Str -> (Str);
+SYNFUNC input0 =
+if (str.suffixof S."/" input0)
+then S."microsoft"
+else
+if (str.suffixof S."windows" input0)
+then S."windows"
+else S."mac";
+

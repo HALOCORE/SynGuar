@@ -1,0 +1,16 @@
+String
+Int
+Int
+------
+"replies to _aya, _tasisuke, and _chan"
+1
+12
+------
+"replies to _aya, _tasisuke, and _chan"
+2
+18
+------
+"replies to _aya, _tasisuke, and _chan"
+3
+33
+$$$$$$

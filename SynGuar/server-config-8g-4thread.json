@@ -1,0 +1,7 @@
+{
+    "synth_port": 5261,
+    "synth_thread_limit": 4,
+    "synth_memory_limit": 8192,
+    "synguar_thread_limit": 4,
+    "synguar_port": 5262
+}

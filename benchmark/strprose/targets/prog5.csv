@@ -1,0 +1,6 @@
+input0,output
+concat x y,concat(x y)
+sin z,sin(z)
+tanh 2.986,tanh(2.986)
+ main argc argv ,main(argc argv)
+

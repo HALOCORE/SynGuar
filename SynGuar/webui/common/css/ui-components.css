@@ -1,0 +1,19 @@
+.screen-cover {
+    background: black;
+    opacity: 0.5;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+  
+.screen-cover-center {
+    position: fixed;
+    top: calc(50% - 50px);
+    left: calc(50% - 100px);
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    color: white;
+}

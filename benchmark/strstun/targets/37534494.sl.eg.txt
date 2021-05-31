@@ -1,0 +1,15 @@
+String
+String
+String
+String
+------
+"I love apples"
+"I hate bananas"
+"banana"
+"I hate bananas"
+------
+"I love apples"
+"I hate bananas"
+"apple"
+"I love apples"
+$$$$$$

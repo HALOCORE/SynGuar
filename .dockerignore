@@ -1,0 +1,16 @@
+outputs
+
+build-strstun
+build-strstun-vscode
+build
+
+StrPROSE-synthesizer/_temp
+StrPROSE-synthesizer/bin
+StrPROSE-synthesizer/obj
+StrSTUN-synthesizer/dependencies/gmp-6.2.1
+StrSTUN-synthesizer/dependencies/libs
+
+docs
+
+.git
+.vscode

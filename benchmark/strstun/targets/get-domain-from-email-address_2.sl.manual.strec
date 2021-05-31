@@ -1,0 +1,4 @@
+
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 = (str.substr input1 I.0 (str.indexof input1 S."_" I.0));
+

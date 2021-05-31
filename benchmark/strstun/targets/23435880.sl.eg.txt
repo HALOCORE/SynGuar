@@ -1,0 +1,12 @@
+String
+String
+Int
+------
+"apple apples"
+"apple"
+2
+------
+"an orange among the oranges is a spoiled orange"
+"orange"
+3
+$$$$$$

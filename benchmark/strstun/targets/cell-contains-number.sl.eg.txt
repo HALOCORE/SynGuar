@@ -1,0 +1,12 @@
+String
+Bool
+------
+"A bird in the hand is worth 2 in the bush."
+true
+------
+"A bird in the hand is worth two in the bush."
+false
+------
+"The 15 shortcuts you simply must know"
+true
+$$$$$$

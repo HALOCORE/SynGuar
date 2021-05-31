@@ -1,0 +1,2 @@
+SYNFUNC :: Str -> Str -> (Int);
+SYNFUNC input0 input1 = (str.indexof input0 input1);

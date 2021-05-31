@@ -1,0 +1,18 @@
+String
+Bool
+------
+"some project,other project"
+true
+------
+"some project"
+true
+------
+"overhead"
+false
+------
+"some project, overhead"
+false
+------
+"some project, other, boo"
+true
+$$$$$$

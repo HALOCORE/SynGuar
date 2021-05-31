@@ -1,0 +1,9 @@
+# 0
+
+SYNFUNC :: Str -> (Int);
+SYNFUNC input0 = 
+if (== (str.indexof input0 S."/n" I.0) I.-1)
+then I.1
+else if (== (str.indexof input0 S."/n" I.0) (str.indexof input0 S."/n" I.-1))
+then (+ I.1 I.1)
+else (+ (+ I.1 I.1) I.1);

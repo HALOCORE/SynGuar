@@ -1,0 +1,9 @@
+SYNFUNC :: Str -> Str -> (Str);
+SYNFUNC input0 input1 = 
+    if (str.prefixof input0 input1) 
+        then S."Prefix"
+        else if (str.suffixof input0 input1) 
+            then S."Suffix"
+            else if (str.contains input0 input1) 
+                then S."Contains"
+                else S."NoRelation";

@@ -1,0 +1,12 @@
+String
+String
+String
+------
+"Item 1 AQ-S810W-2AVDF"
+"AQ-S810W-2AVDF"
+"Item 1"
+------
+"Item 2 AQ-230A-1DUQ"
+"AQ-230A"
+"Item 2 -1DUQ"
+$$$$$$

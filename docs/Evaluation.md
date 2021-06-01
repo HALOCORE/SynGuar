@@ -10,7 +10,7 @@ See [Benchmark.md](./Benchmark.md) for how to **Generate example files for evalu
 
 This includes the `server-synth.py`, `server-synguar.py`, and `webui.py` (for the monitoring dashboard).
 
-Notice: Different evaluation task requires different amount of memory (different configuration files).
+Notice: Different evaluation task requires a different amount of memory (different configuration files).
 Suggested memory capacity is listed in the next step. **Please run `server-synth.py` and `server-synguar.py` with suggested memory/threads configuration according to different evaluation task. Suggestions are listed in Step 3.**
 
 See [Details-SynGuar.md](./Details-SynGuar.md) for how to **Run SynGuar** with configurations.
@@ -21,10 +21,10 @@ After starting the servers, open the following link for monitoring the server st
 
 ## Step 3: Post evaluation tasks to local servers
 
-Then submit batch of requests for the evaluation. After submitting each batch, look at dashboards in the browser and wait until all requests finish running. 
-To run evaluation requests, first change working directory to `./SynGuar`.
+Then post evaluation task (4 of them, each consists of a batch of requests) one by one. After posting each batch, look at dashboards in the browser and wait until all requests finish running. 
+To post those tasks, first change the working directory to `./SynGuar`.
 
-There are 4 batches of evaluation requests:
+There are 4 tasks (4 batches of evaluation requests):
 
 - Run benchmarks for `SynGuar-PROSE`
   - Command: `python3 evaluation.py run-prose`
@@ -48,7 +48,7 @@ There are 4 batches of evaluation requests:
   - Example Configuration: [server-config-24g-6thread.json](../SynGuar/server-config-24g-6thread.json)
   
 The servers will cache results for all the requests, so it is OK 
-to stop those servers and start them later. Finished requests will be fetched from cache.
+to stop those servers and start them later. Finished requests will be fetched from the cache (the `outputs/cache` folder).
 
 Proper configuration for `server-synth.py` and `server-synguar.py` is 
 essential for finishing the evaluation:
@@ -56,12 +56,12 @@ essential for finishing the evaluation:
 - `synth_thread_limit` must be able to divide `synth_memory_limit` 
 - `synguar_thread_limit` can be any value equal or larger than `synth_thread_limit` for maximum parallelization
 
-If under a configuration the evaluation is stucked, it is safe to simply stop the servers and restart with larger `synth_memory_limit` to run the the rest of the evaluation.
+If under a configuration the task is stuck, it is safe to simply stop the servers and restart with a larger `synth_memory_limit` to run the rest of the task.
 ## Step 4: Collect data
 
 After the above evaluation requests are finished, run the following commands to collect results and output to `./outputs/summaries` (requires `server-synth.py` and `server-synguar.py` to be up and running).
 
-first change working directory to `./SynGuar`, then run the following:
+First, change the working directory to `./SynGuar`, then run the following:
 
 - Collect data related to `strprose` benchmark
   `python3 evaluation.py data-prose`

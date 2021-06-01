@@ -2,7 +2,7 @@
 
 If want to use docker, please see [BuildRun-Docker.md](./BuildRun-Docker.md) instead.
 
-Follow the steps below to build direcly on the host machine. `Ubuntu 18.04` and `Ubuntu 20.04` are tested.
+Follow the steps below to build directly on the host machine. `Ubuntu 18.04` and `Ubuntu 20.04` are tested.
 
 ## Build Steps
 

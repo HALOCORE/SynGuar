@@ -14,7 +14,7 @@ cd /tmp && wget https://packages.microsoft.com/config/ubuntu/20.04/packages-micr
 ```
 If permission denied, add `sudo` before each command.
 
-Or see official docs for installing .NET on ubuntu (18.04/20.04)
+Or see official docs for installing .NET on Ubuntu (18.04/20.04)
 https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 
 Both `.NET runtime 3.1` and `.NET SDK 5.0` are required.
@@ -27,10 +27,10 @@ dotnet build
 dotnet build --configuration Release
 ```
 
-The debug version of compiled program will be at `./bin/Debug/netcoreapp3.1/StrPROSE.dll`, and the release version of compiled program will be at `./bin/Release/netcoreapp3.1/StrPROSE.dll`  
+The debug version of the compiled program will be at `./bin/Debug/netcoreapp3.1/StrPROSE.dll`, and the release version of the compiled program will be at `./bin/Release/netcoreapp3.1/StrPROSE.dll`  
 (Current folder is `./StrPROSE-synthesizer/StrPROSE`).
 
-Then run the following command under `./StrPEOSE-synthesizer/StrPROSE` to see if build is successful:
+Then run the following command under `./StrPEOSE-synthesizer/StrPROSE` to see if the build is successful:
 ```
 dotnet ./bin/Debug/netcoreapp3.1/StrPROSE.dll --help
 dotnet ./bin/Release/netcoreapp3.1/StrPROSE.dll --help
@@ -39,7 +39,7 @@ dotnet ./bin/Release/netcoreapp3.1/StrPROSE.dll --help
 ## Tool Usage (Automated by evaluation scripts)
 The usage is for running benchmark manually.
 
-After compiling the tool, use the following command to see help.
+After compiling the tool, use the following command to see the help information.
   ```
   dotnet ./bin/Debug/netcoreapp3.1/StrPROSE.dll --help
   ```
@@ -55,7 +55,7 @@ After compiling the tool, use the following command to see help.
             Select a csv file in <testpath> to do synthesize. (for debugging)
   ```
 
-Belows are some examples of using the synthesizer (assume working directory is root directory of this repo):
+Below are some examples of using the synthesizer (assume working directory is the root directory of this repo):
 - Generate examples:
   ```
   dotnet ./StrPROSE-synthesizer/StrPROSE/bin/Debug/netcoreapp3.1/StrPROSE.dll --samplegen ./benchmark/strprose/targets prog3 3014 2000 ./benchmark/strprose/example_files

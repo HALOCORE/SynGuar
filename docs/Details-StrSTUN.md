@@ -12,7 +12,7 @@ sudo apt-get install build-essential cmake
 
 ### Step 2: Compile `gmp 6.2.1`
 
-First make sure m4 is installed. If not, run the following command:
+First, make sure m4 is installed. If not, run the following command:
 ```
 apt-get install m4
 ```
@@ -55,16 +55,16 @@ To run the tool interactively (providing examples from standard input):
 ```
 
 ### Nont-interactive (from files)
-To run the tool with example files and syntax contraint files, please provide argments to it:
+To run the tool with example files and syntax constraint files, please provide arguments to it:
 
 - `-eN` how many examples in use (first N examples)
-- `-f<file>` set the path to component file and example file. Component file will be `<file>.comp.txt`, example file will be `<file>.eg.txt`.
+- `-f<file>` set the path to the component file and the example file. Component file will be `<file>.comp.txt`, example file will be `<file>.eg.txt`.
 - `-x<file>` set the path to example file to `<file>` (override `-f`). `-x` should be after `-f`.
 - `-nl` Synthesize without hypothesis space counting (By default, hypothesis space counting is turned on).
 
 For example:
-- Run the synthesizer with constraint file `.../targets/19558979.sl.comp.txt` and first 10 examples from the example file `.../example_files/19558979.seed0.eg.txt`.
-- 
+- Run the synthesizer with constraint file `.../targets/19558979.sl.comp.txt` and the first 10 examples from the example file `.../example_files/19558979.seed0.eg.txt`.
+  
   ```
   ./build-strstun/strstun -e10 -f./benchmark/strstun/targets/19558979.sl -x./benchmark/strstun/example_files/19558979.seed0.eg.txt
   ```

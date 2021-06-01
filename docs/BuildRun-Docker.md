@@ -2,15 +2,15 @@
 
 ## Build the environment
 
-Build with Docker is straight-forward. 
-It requires `docker` installed and can be controlled under current user without `sudo`.
+Build with Docker is straightforward. 
+It requires `docker` installed and can be controlled under the current user without `sudo`.
 Running the following script at the root directory of this repo:
 ```
 ./docker-build.sh
 ```
 Wait for several minutes until it finishes. It will create a docker image `synguar:v1`.
 
-## Run, stop, and connect
+## Run, stop and connect
 
 - Run the container forever in the background:
   ```
@@ -35,8 +35,8 @@ The ports `5261`, `5262`, `5265` are mapped to the host machine. From the host m
 
 ## Directory Structure inside Docker
 
-Part of the current repo are mapped to `/home/synguar/SynGuarAll/` folder, and the directory structure is perserved.
-- `/home/synguar/SynGuarAll/` is the root of this repo inside docker container.
+Part of the current repo is mapped to `/home/synguar/SynGuarAll/` folder, and the directory structure is preserved.
+- `/home/synguar/SynGuarAll/` is the root of this repo inside the docker container.
 
 - 3 folders (code folders) are copied into docker image during build time:
     - StrPROSE-synthesizer
@@ -52,7 +52,7 @@ Part of the current repo are mapped to `/home/synguar/SynGuarAll/` folder, and t
 
 This means that data folders are mounted. Generating examples and running the evaluation will create persistent files in those folders on the host machine.
 
-Any changes to the code folders requires rebuilding the docker image.
+Any changes to the code folders require rebuilding the docker image.
 
 ## Run the evaluation or the synthesizers 
 

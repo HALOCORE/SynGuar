@@ -1,4 +1,4 @@
-# Requirements for build and run the artifact
+# Requirements for building and running the artifact
 
 ## With Docker
 - linux system with Docker and bash shell

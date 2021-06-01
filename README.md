@@ -7,7 +7,7 @@
 
 This repo is a program synthesis framework that provides PAC-style generalization guarantee while doing PBE program synthesis on i.i.d. samples. The top-level is the `SynGuar` algorithm that decides sufficient sample size for $(\epsilon, \delta)$-generalization based on the size of hypothesis space calculated by the program synthesizer after seeing some I/O examples. 
 
-Here $(\epsilon, \delta)$-generalization means with probability at least $1-\delta$, the synthesized programv $f$ has true error $\mathop{\mathbb{E}}[\mathbb{I}[f(x) \neq c(x)]]$ smaller than $\epsilon$ with respect to the target function $c$ on the distribution $D$ where the I/O examples are sampled from. 
+Here $(\epsilon, \delta)$-generalization means with probability at least $1-\delta$, the synthesized programv $f$ has true error $\mathop{\mathbb{E}}[\mathbb{I}[f(x) \neq c(x)]]$ smaller than $\epsilon$ with respect to the target function $c$ on the distribution $D$ where the I/O examples are sampled from. See [SynGuar-algorithm](./docs/proofs/proofs.pdf) for details about this algorithm. 
 
 ![how-synguar-works](./docs/figures/how-synguar-works.png)
 

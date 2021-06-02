@@ -61,42 +61,59 @@
 
 \section{Preliminaries}
 
+\paragraph{Problem Setup.} We are given an oracle to sample i.i.d. I/O examples from some unknown distribution $\distrib$, a synthesizer with bounded hypothesis space and the ability to soundly upper bound number of programs consistent with I/O examples, and user-specified $(\epsilon,\delta)$ parameters that capture the desired generalization guarantee. The synthesis algorithm queries the oracle for as many I/O examples as it needs and terminates with either $None$ or a synthesized function $f$. We assume that $f$ will satisfy all given I/O examples. We use $S$ to represent all the I/O examples queried by the synthesis algorithm until it terminates. The probability that the synthesizer returns a function $f$ that might not generalize should be under the given small $\delta$, and the randomness is on I/O examples.
+
+Formally, the goal is for a synthesis algorithm to achieve a PAC-style $(\epsilon,\delta)$ generalization guarantee. We define $(\epsilon,\delta)$-synthesizer as the following:
+
+\begin{definition}[$(\epsilon,\delta)$-synthesizer]
+\label{def:eps-delta}
+  A synthesis algorithm $\mathcal{A}$ with hypothesis space $H$ is an $(\epsilon, \delta)$-synthesizer with respect to a target class of
+  functions $\concept$ iff for any input distributions $\distrib$, for all $t
+  \in \concept$, $\epsilon \in (0, 0.5)$, $\delta \in (0, 0.5)$, if $\synthalgo$ outputs a program $f \in H$ on a set of samples $S$ drawn i.i.d from the $\distrib$, then:
+%  \bo{The event and condition of Pr seems inverted}
+  \begin{align*}
+    Pr\lbrack \synthalgo~\text{outputs}~ f \text{ such that } error(f) > \epsilon \rbrack < \delta
+  \end{align*} 
+
+\end{definition}
+
 \paragraph{A starting point.} The number of examples provably sufficient to achieve the $(\epsilon, \delta)$-generalization is given by Blumer \etal~\cite{blumer1987occam}. We restate this result, which computes sample complexity as a function of $(\epsilon,\delta)$ and the capacity (or size) of any given hypothesis space $H$.
 
 \begin{theorem}[Sample Complexity for $(\epsilon, \delta)$-synthesis]
   \label{thm:static-union-bound}
 For all $\epsilon \in (0,\frac{1}{2})$, $\delta\in
-(0,\frac{1}{2})$, and hypothesis space $H$ which contains the target program $t \in H$, a synthesis algorithm $\synthalgo$ which outputs functions consistent with $n$ i.i.d samples is an $(\epsilon, \delta)$-synthesizer, if 
+(0,\frac{1}{2})$, hypothesis space $H$ and any target program $t$, a synthesis algorithm $\synthalgo$ which outputs functions consistent with $n$ i.i.d samples is an $(\epsilon, \delta)$-synthesizer, if 
 \begin{align*}
   n > \frac{1}{\epsilon}(\ln |H| + \ln
   \frac{1}{\delta})
 \end{align*}
+
 \end{theorem}
 
 \begin{proof}
-Assume the true concept is $f$ and all I/O examples are consistent with $f$.
-Now consider a single hypothesis $h\in H$ first.
-Let $L_{(\mathcal{D},f)}(h)$ be the true error (expectation of 0-1 loss) $L_{(\mathcal{D},f)}(h)=\mathop{\mathbb{E}}_{x\sim\mathcal{D}}\mathbb{I}[f(x)\neq h(x)]$,
-and let $L_{(\mathcal{S},f)}(h)$ be the emperical error (emperical average of 0-1 loss) $L_{(\mathcal{S},f)}(h)=\frac{1}{|S|}\sum_{x\in S}\mathbb{I}[f(x)\neq h(x)]$,
+Assume the true concept (may or may not in the hypothesis space) is $t$ and all I/O examples are consistent with $t$.
+Now consider a single hypothesis $f\in H$ first.
+Let $error(f) = L_{(\mathcal{D},t)}(f)$ be the true error (expectation of 0-1 loss) $L_{(\mathcal{D},t)}(f)=\mathop{\mathbb{E}}_{x\sim\mathcal{D}}\mathbb{I}[t(x)\neq f(x)]$,
+and let $L_{(\mathcal{S},t)}(f)$ be the empirical error (empirical average of 0-1 loss) $L_{(\mathcal{S},t)}(f)=\frac{1}{|S|}\sum_{x\in S}\mathbb{I}[t(x)\neq f(x)]$,
 The following holds:
 \begin{align*}
-\prb_{x\in \mathcal{D}} [\mathbb{I}[f(x)\neq h(x)] = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq (1-\epsilon)
+\prb_{x\in \mathcal{D}} [\mathbb{I}[t(x)\neq f(x)] = 0 ~|~ L_{(\mathcal{D},t)}(f) \geq \epsilon] \leq (1-\epsilon)
 \end{align*}
 Now consider a sample $S$ with size $n$, the following holds:
 \begin{align*}
-\prb_{S\in \mathcal{D}^{n}} [L_{(\mathcal{S},f)}(h) = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq (1-\epsilon)^{n}
+\prb_{S\in \mathcal{D}^{n}} [L_{(\mathcal{S},t)}(f) = 0 ~|~ L_{(\mathcal{D},t)}(f) \geq \epsilon] \leq (1-\epsilon)^{n}
 \end{align*}
 
 Then take union bound on all hypothesis in $H$:
 \begin{align*}
-    &\prb_{S\in \mathcal{D}^{n}} [\exists h\in H, ~L_{(\mathcal{S},f)}(h) = 0 ~|~ L_{(\mathcal{D},f)}(h) \geq \epsilon] \leq |H|(1-\epsilon)^{n} < \delta\\
+    &\prb_{S\in \mathcal{D}^{n}} [\exists f\in H, ~L_{(\mathcal{S},t)}(f) = 0 ~\land~ L_{(\mathcal{D},t)}(f) \geq \epsilon] \leq |H|(1-\epsilon)^{n} < \delta\\
     \Rightarrow & ~n > \frac{1}{\epsilon}(\ln |H| + \ln
     \frac{1}{\delta}) \text{ suffices}
 \end{align*}
 
 So with sample size larger than $\frac{1}{\epsilon}(\ln |H| + \ln
-\frac{1}{\delta})$, with probability at least $1-\delta$, all $h\in H$ that 
-have true error larger than $\epsilon$ have non-zero emperical loss and will be ruled out
+\frac{1}{\delta})$, with probability at least $1-\delta$, all $f\in H$ that 
+have true error larger than $\epsilon$ have a non-zero empirical loss and will be ruled out
 and any hypothesis in $H$ that is still consistent with the sample has 
 true error smaller than $\epsilon$.
 
@@ -109,7 +126,7 @@ true error smaller than $\epsilon$.
     \label{alg:main}
     \begin{algorithmic}[1]
       \Procedure{\tool}{$\epsilon, \delta$}
-      \State $k = 10$ // tunable parameter
+      \State $k = 1$ // tunable parameter
       \State $g \gets \Call{PickStoppingCond}{}$ \label{alg:pick-cond}
       \State $S' \gets \varnothing, s \gets 0$
       \State $size_{H} \gets \Call{ComputeSize}{H}$ \label{alg:call-compute} 
@@ -207,16 +224,16 @@ In order to prove the last property, we define a new quantity $\omega(Q)$. It is
 
 \begin{theorem}[P3]
 \label{thm:p3}
-    \tool uses no more than $2\omega(Q)$ examples on any $Q$ with $\parf_{0}(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(\frac{1}{\delta}))\}$.
+    \tool uses no more than $2\omega(Q)$ examples on any $Q$ with $\parf(x) = \parf_{0}(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(\frac{1}{\delta}))\}$.
 \end{theorem}
-To save space, we provide the proof in supplementary material.
+
 \begin{proof}
 Let $S'\subset Q$ be the samples in sampling phase. Let $P$ be the samples when $\omega(Q)=\Call{Prefix}{Q,g}$ for some $g$ and let us call this the best stopping point for \tool's sampling phase on $Q$. Then $\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{size_{H_{P}}} + ln{\frac{1}{\delta}})$ where $size_{H_{P}}= \Call{ComputeSize}{H_{P}}$.
 
 There are two cases to analyze. 1) If \tool's phase $1$ finishes before the best stopping point and 2) if \tool's phase $1$ finishes after the best stopping point. We observe that in both cases the $m_{g_0}\le\omega(Q)$. 
 The full proof is the following:
 
-Let $\parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\}$, $\gamma(Q) = \Call{Prefix}{Q,\parf_0}$ and $S'\subset Q$ be the samples in sampling phase.
+Let $\parf(x) = \parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\}$, $\gamma(Q) = \Call{Prefix}{Q,\parf_0}$ and $S'\subset Q$ be the samples in sampling phase.
 
 If $P$ be the samples for best stopping point then
 

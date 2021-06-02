@@ -59,7 +59,7 @@ Details: See [BuildRun-Docker.md](./docs/BuildRun-Docker.md) for details.
 
 Steps to run the docker container:
   1. Make sure `docker` is running and can be controlled under the current user.
-  2. Run `./docker-build.sh` to build the docker image.
+  2. Run `./docker-build.sh` to build the docker image, or run `docker pull unionss/synguar:v0.1.0` and `docker tag unionss/synguar:v0.1.0 synguar:v1` to pull and rename the docker image in case the build is not successful.
   3. Run `./docker-run.sh` to start a container that is running in the background from the built image.
   4. Run `./docker-connect.sh` to connect to the running container, with a bash shell.
   5. Run `./docker-stop.sh` to stop the running container.

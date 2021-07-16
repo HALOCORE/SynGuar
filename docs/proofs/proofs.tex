@@ -151,11 +151,11 @@ true error smaller than $\epsilon$.
 \tool's design is motivated by being able to give a formal generalization guarantee and a bounded sample complexity. For this purpose, we state and prove the following properties: 
 % Here, we detail and prove these properties.
 
-\paragraph{(P1: Termination)} \tool always terminates for a finite $|H|$.
+\noindent\textbf{(P1: Termination)} \tool always terminates for a finite $|H|$.
 
-\paragraph{(P2: $(\epsilon, \delta)$ guarantees)} If \tool returns an $f$ then $f$ is $\epsilon$-far with probability $<\delta$.
+\noindent\textbf{(P2: $(\epsilon, \delta)$ guarantees)} If \tool returns an $f$ then $f$ is $\epsilon$-far with probability $<\delta$.
 
-\paragraph{(P3: Sample complexity)} \tool's sample complexity is always within 2$\times$ of the optimal.
+\noindent\textbf{(P3: Sample complexity)} \tool's sample complexity is always within 2$\times$ of the optimal.
 
 \begin{theorem}[P1]
 \label{thm:p1}
@@ -164,29 +164,13 @@ true error smaller than $\epsilon$.
 \begin{proof}
 It suffices to prove that the sampling phase (lines $7-13$) of \tool terminates in order to show that \tool terminates.
 %The phase can be concisely written as follows:
-In each iteration of the sampling phase,  let $S$ be the queue storing the user-provided examples, $S_i = S_{i-1}\cup\{s_1,...s_k\}$. For each $S_i$, $H_{S_i}$ determines the set of consistent hypothesis that satisfy $S_i$. Let $N_i$ be the number of I/O examples needed for generalization after iteration $i$. 
-% Let $S'$ be the user provided examples. The examples are provided one by one, until $|S'| = N_{\parf}(H,0,\infty,\Phi)$, where $N_{\parf}(H,s,n,Q)$ is defined as:
-% {\small
-%     \begin{align*}
-%     &N_{\parf}(H,s,n,Q) = 
-%     \begin{cases}
-%     n & \text{if } |Q| = 0\\
-%     s + 1  & \text{if } |H_{Q}|=0\\
-%     N_{\parf}(H_{Q}, ~s + k, \\
-%     ~\min\lbrace n,~s + k + \parf(|H_{Q}|)\rbrace, \\
-%     Q\cup \{q_1,...q_k\}) & \text{if } |Q|>0\\https://www.overleaf.com/project/600a6d81177355d696fc6590
-%     \end{cases}\\
-%     &\text{Where } \{q_1,...q_k\} \text{ is the next k samples }
-%     \end{align*}
-% }
-%
+In each iteration of the sampling phase,  let $S_i$ be the queue storing the user-provided examples after each iteration, $z_t$ be the $t^\text{th}$ example, $S_{i+1} = S_{i}\cup \{z_{ik+1},...z_{ik+k}\}$ and $S_0=\varnothing$. For each $S_i$, $H_{S_i}$ determines the set of consistent hypothesis that satisfy $S_i$. Let $N_i$ be the limit of  the number of I/O examples $n$ for the sampling phase after iteration $i$. 
 For iterations $i$ and $j$ where $i<j$ and $\forall g:\mathbb{N} \rightarrow \mathbb{Z}$ such that $g$ is monotonically non-decreasing, the following holds: 
 \begin{align*}
-  S_i\subset S_j &\Rightarrow |H_{S_j}|\leq |H_{S_i}| \Rightarrow g(|H_{S_j}|) \leq g(|H_{S_i}|)\\
-  &\Rightarrow N_j \leq N_i\text{ (see line $10$ in Alg.~\ref{alg:main})}
+  &S_i\subset S_j \Rightarrow |H_{S_j}|\leq |H_{S_i}| \Rightarrow g(|H_{S_j}|) \leq g(|H_{S_i}|)\\
+  &N_j \leq \min\{N_i, |S_j| + g(|H_{S_j}|)\} \leq N_i \text{ (see line $13$ in Alg.~\ref{alg:main})}
 \end{align*}
-Therefore, if $N_1 = g(|H|)$ then in the worst case the loop will terminate at some iteration $p$ such that $|S_p|\geq N_1$.
-%Therefore, if $N_1 = g(|H|)$ then in the worst case the loop will terminate at some iteration $p$ such that the queue stores more than $N_1$ examples, $|S_p|\geq N_1$.
+Therefore, if $N_0 \leq g(|H|)$ then the loop will terminate at some iteration $p$ such that $N_p < |S_p| \leq N_p + k \leq N_0 + k$.
 \end{proof}
 
 \begin{theorem}[P2]
@@ -224,49 +208,46 @@ In order to prove the last property, we define a new quantity $\omega(Q)$. It is
 
 \begin{theorem}[P3]
 \label{thm:p3}
-    \tool uses no more than $2\omega(Q)$ examples on any $Q$ with $\parf(x) = \parf_{0}(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(\frac{1}{\delta}))\}$.
+\tool uses no more than $2\omega(Q)$ examples on any $Q$ when the result is not None with $\parf(x) = \parf_{0}(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(\frac{1}{\delta}))\}$ and $k\leq \frac{1}{2\epsilon}\ln\frac{1}{\delta}$.
 \end{theorem}
 
 \begin{proof}
-Let $S'\subset Q$ be the samples in sampling phase. Let $P$ be the samples when $\omega(Q)=\Call{Prefix}{Q,g}$ for some $g$ and let us call this the best stopping point for \tool's sampling phase on $Q$. Then $\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{size_{H_{P}}} + ln{\frac{1}{\delta}})$ where $size_{H_{P}}= \Call{ComputeSize}{H_{P}}$.
+Let $S'\subset Q$ be the samples in sampling phase. Let $P$ be the samples when $\omega(Q)=\Call{Prefix}{Q,\parf}$ for some $\parf$ and let us call this the best stopping point for \tool's sampling phase on $Q$. Then $\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{|H_P|} + ln{\frac{1}{\delta}})$.
+Let $\parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\}$, $\gamma(Q) = \Call{Prefix}{Q,\parf_0}$ and $S'\subset Q$ be the samples in sampling phase.
 
-There are two cases to analyze. 1) If \tool's phase $1$ finishes before the best stopping point and 2) if \tool's phase $1$ finishes after the best stopping point. We observe that in both cases the $m_{g_0}\le\omega(Q)$. 
-The full proof is the following:
+If $P$ is the samples for the best stopping point, then
 
-Let $\parf(x) = \parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\}$, $\gamma(Q) = \Call{Prefix}{Q,\parf_0}$ and $S'\subset Q$ be the samples in sampling phase.
+$$
+\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{|H_P|} + ln{\frac{1}{\delta}})
+$$
 
-If $P$ be the samples for best stopping point then
-
-$\omega(Q)=|P|+\frac{1}{\epsilon}(\ln{|H_P} + ln{\frac{1}{\delta}})$
-
-\noindent Case 1: \tool using $\parf_0$ is stopping earlier in phrase 1 than the best possible stopping point, $|S'| < |P|$
+\noindent Case 1: \tool using $\parf_0$ is stopping earlier in phrase 1 than the best possible stopping point, $|S'| \leq |P|$
 \begin{align*}
-    \gamma(Q) - 2\cdot\omega(Q) &= |S'|- 2\cdot|P| +  \frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - 2\cdot \log{|H_{P}|})\\ 
-    &- \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}}\\
-    & \leq -|P| - \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}} + \frac{1}{\epsilon}\cdot(\log{|H_{S'}|})\\
-    &\text{since }|S'| < |P|
+    \gamma(Q) - 2\cdot\omega(Q) &= |S'|- 2\cdot|P| +  \frac{1}{\epsilon}\cdot(\ln{|H_{S'}|} - 2\cdot \ln{|H_{P}|})\\ 
+    &- \frac{1}{\epsilon}\cdot\ln{\frac{1}{\delta}}\\
+    & \leq -|P| - \frac{1}{\epsilon}\cdot\ln{\frac{1}{\delta}} + \frac{1}{\epsilon}\cdot(\ln{|H_{S'}|})\\
+    &\text{since }|S'| \leq |P|
 \end{align*}
 Observe that, for $\parf_0(x)=\max\{0, ~\frac{1}{\epsilon}(\ln(x)-\ln(1/\delta))\} $ the 
-$|S'| \geq \frac{1}{\epsilon}\cdot(\log{|H_{S'}|}-\log{\frac{1}{\delta}})$ (see, step $9$ in Algorithm $2$)
+$|S'| \geq \frac{1}{\epsilon}\cdot(\ln{|H_{S'}|}-\ln{\frac{1}{\delta}})$ (see, step $12$ in Algorithm $2$)
 \begin{align*}
-    \gamma(Q) - 2\cdot\omega(Q) &\leq 0
+    \gamma(Q) - 2\cdot\omega(Q) \leq -|P| + |S'| \leq 0
 \end{align*}
 
-\noindent Case 2: \tool using $\parf_0$ is stopping after the best possible stopping point in phrase 1, $|H_{P}|\ge|H_{S'}|$.
+\noindent Case 2: \tool using $\parf_0$ is stopping after the best possible stopping point in phrase 1,  $|S'| > |P|$
 
-Observe that $|S'| \le \omega(Q)$. Because for \tool using $\parf_0$, after seeing $P$, it will take no more than $\parf_0(|H_{P}|)=\frac{1}{\epsilon}(\ln{|H_{P}|} - ln{\frac{1}{\delta}})$ examples in phase 1.
+In this case, $|H_{P}|\ge|H_{S'}|$. Observe that $|S'| \le \omega(Q)$. Because for \tool using $\parf_0$, after seeing $P$, it will take no more than $\parf_0(|H_{P}|) + 2k =\max\{0, \frac{1}{\epsilon}(\ln{|H_{P}|} - ln{\frac{1}{\delta}})\} + 2k \leq \frac{1}{\epsilon}(\ln{|H_P|} + ln{\frac{1}{\delta}})$ examples in phase 1.
 \begin{align*}
-    |S'| &\le |P| + \parf_0(|H_{P}|)\\
+    |S'| &\le |P| + 2k + \parf_0(|H_{P}|)\\
     \omega(Q) &= |P| + \frac{1}{\epsilon}(\ln{|H_{P}|} + ln{\frac{1}{\delta}})\\
     &\implies |S'| \le \omega(Q)
 \end{align*}
 Now,
 \begin{align*}
-    \gamma(Q) - 2\cdot\omega(Q) &= |S'|- 2\cdot|P| +  \frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - 2\cdot \log{|H_{P}|}) \\
-    &- \frac{1}{\epsilon}\cdot\log{\frac{1}{\delta}}\\
-    \text{Substituting, }|S'|&\leq|P|+\frac{1}{\epsilon}(\log{|H_{P}|}+\log{\frac{1}{\delta}})\\
-    &\leq -|P| +\frac{1}{\epsilon}\cdot(\log{|H_{S'}|} - \log{|H_{P}|})\\
-    &\leq 0\text{ since, }|H_{P}|\ge|H_{S'}|
+    \gamma(Q) - 2\cdot\omega(Q) &= |S'| + \frac{1}{\epsilon}\cdot(\ln{|H_{S'}|} + \ln{\frac{1}{\delta}}) - 2\cdot\omega(Q)\\
+    &\leq \frac{1}{\epsilon}\cdot(\ln{|H_{S'}|} + \ln{\frac{1}{\delta}}) - \omega(Q) \quad(\text{by } |S'| \le \omega(Q))\\
+    &\leq -|P| +\frac{1}{\epsilon}\cdot(\ln{|H_{S'}|} - \ln{|H_{P}|})\\
+    &\leq 0 \quad (\text{since, }|H_{P}|\ge|H_{S'}|)
 \end{align*}
 \end{proof}
 

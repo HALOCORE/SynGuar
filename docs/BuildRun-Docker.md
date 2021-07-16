@@ -12,8 +12,8 @@ Wait for several minutes until it finishes. It will create a docker image `syngu
 
 **Alternative:** The docker image is also available at [here](https://hub.docker.com/r/unionss/synguar/tags?page=1&ordering=last_updated). Use the following commands to replace the docker build (`./docker-build.sh`) in case the build is not successful:
 ```
-docker pull unionss/synguar:v0.1.0
-docker tag unionss/synguar:v0.1.0 synguar:v1
+docker pull unionss/synguar:v0.1.1
+docker tag unionss/synguar:v0.1.1 synguar:v1
 ```
 
 Notice that the above commands only replace the build step. You still need this repo to start the container with mounted data folders. Please see the steps below.

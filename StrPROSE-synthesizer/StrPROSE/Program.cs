@@ -44,6 +44,10 @@ namespace PROSE_StrGen
                 string test_dir = args[1];
 
                 Mains.Main_SynthTestrun(test_dir);
+            } else if(args[0] == "--testpredict") {
+                string test_dir = args[1];
+                int eg_number = Convert.ToInt32(args[2]);
+                Mains.Main_SynthTestpredict(test_dir, eg_number);
             } else {
                 Console.WriteLine("ERROR! unknown argument \"" + args[0] + "\". Please use --help to see notes.");
             }

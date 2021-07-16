@@ -10,18 +10,19 @@ def invoke_strprose_evaluation_requests():
     
     random.shuffle(strprose_example_files)
     for example_file in strprose_example_files:
-        request_data = {
-            "synthesizer": "StrPROSE",
-            "example_file": example_file,
-            "epsilon": 0.05,
-            "delta": 0.02,
-            "k": 1
-        }
-        print("# [eval] POST ", request_data)
-        resp = requests.post(SYNGUAR_API_ENDPOINT, json=request_data)
-        if resp.status_code != 200:
-            print("# [eval] ERROR: status_code", resp.status_code)
-            assert(False)
+        for epsilon in [0.02, 0.05, 0.1]:
+            request_data = {
+                "synthesizer": "StrPROSE",
+                "example_file": example_file,
+                "epsilon": epsilon,
+                "delta": 0.02,
+                "k": 1
+            }
+            print("# [eval] POST ", request_data)
+            resp = requests.post(SYNGUAR_API_ENDPOINT, json=request_data)
+            if resp.status_code != 200:
+                print("# [eval] ERROR: status_code", resp.status_code)
+                assert(False)
 
 def invoke_strprose_spacedrop_requests():
     strprose_example_files = [x for x in list(os.listdir(EXAMPLE_STRPROSE_FULLDIR)) if x.endswith(".csv")]

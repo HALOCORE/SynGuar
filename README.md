@@ -1,7 +1,7 @@
 ![SynGuar](./docs/figures/SynGuar-icon-fixed.svg)
 --------
 
-> SynGuar: Guaranteeing Generalization in Programming by Example
+> This is the artifact for the [paper](./AcceptedPaper.pdf) *SynGuar: Guaranteeing Generalization in Programming by Example* accepted by ESEC/FSE 2021.
 
 
 

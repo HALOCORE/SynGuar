@@ -70,3 +70,57 @@ Below are some examples of using the synthesizer (assume working directory is th
   ```
   dotnet ./StrPROSE-synthesizer/StrPROSE/bin/Debug/netcoreapp3.1/StrPROSE.dll --test ./StrPROSE-synthesizer/tests
   ```
+
+### Synthesis with an example file
+Now look at a running example for synthesis with an example file. The example file is a `.csv` file in the following format:
+```
+input0,output
+T9A4l K4C,t9a4l
+OG7 tS 9,og7
+"4P f565Y,kd ",4p
+"E If w,QsVj",e
+jtK gwieR,jtk
+" TeY ,2eU2N",tey
+......
+```
+
+Use the following command to run the synthesizer:
+```
+dotnet ./StrPROSE-synthesizer/StrPROSE/bin/Debug/netcoreapp3.1/StrPROSE.dll --synthloop ./benchmark/strprose/example_files/prog1.seed1000.csv ./outputs/cache/StrPROSE
+```
+
+Then the synthesizer will run a loop to ask for sample size. Input `5` and press `Enter`. The synthesizer will check the cache for the results of sample size 1-5. If not in the cache, the synthesizer will synthesize with sample size 1-5. Then it will ask for sample size again. Input `-1` will stop the synthesis loop.
+
+```
+
+        StrPROSE 0.1
+        2021.3.20
+
+
+================ Synthesize Loop (./benchmark/strprose/example_files/prog1.seed1000.csv)================
+# Constructing Synthesizer ...
+# Length of a row: 2
+# Please input example_size:
+5
+# Important Example.  #eg=1 newVSAsize=11550491192205431488
+# Important Example.  #eg=2 newVSAsize=4326192
+# Important Example.  #eg=3 newVSAsize=8220
+# Important Example.  #eg=4 newVSAsize=60
+## Write 5 examples with H to csv: ./prog1.seed1000.csv.cache.csv
+# synth.currentVSASize: 60
+# synth.currentProgram: LowerCase(SubString(x, AbsPos(x, 0), RelPos(x, (.*?, \s+, 0, 0))), x)
+# Please input example_size:
+-1
+================
+# Bye
+```
+
+The synthesizer will also output the results to another `.csv` file in the specified cache folder:
+```
+input0,output,H,important,program
+T9A4l K4C,t9a4l,11550491192205431488,True,"ConstStr(""t9a4l"")"
+OG7 tS 9,og7,4326192,True,"LowerCase(SubString(x, ......
+"4P f565Y,kd ",4p,8220,True,"LowerCase(SubString(x,......
+......
+```
+The output file contains the synthesized result after each additional  example and the size of the hypothesis space. The `important` column indicates whether the example on each row drop the hypothesis space or not.

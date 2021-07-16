@@ -33,9 +33,8 @@ There are 4 tasks (4 batches of evaluation requests):
 
 - Run benchmarks for `SynGuar-STUN`
   - Command: `python3 evaluation.py run-stun`
-  - Notice: 512GB memory required (Amazon EC2 memory optimized server suggested)
+  - Notice: 512GB total memory required to finish all benchmarks (Amazon EC2 memory-optimized server suggested). 32GB: more than half; 128GB: 98%; 512GB: 100%. However, you can still run this task with `16GB` or `32GB` total memory configuration to get partial results. OOM jobs will be killed and be marked in red on the monitoring dashboard for `server-synth.py`.
   - Example Configuration: [server-config-512g-16thread.json](../SynGuar/server-config-512g-16thread.json)
-  - Notice: 512GB total memory required to finish all benchmarks (Amazon EC2 memory optimized server suggested). 32GB: more than half; 128GB: 98%; 512GB: 100%.
   
 - Task 3: Hypothesis Space drop for `SynGuar-PROSE`
   - Command: `python3 evaluation.py sdrop-prose`
@@ -57,6 +56,14 @@ essential for finishing the evaluation:
 - `synguar_thread_limit` can be any value equal or larger than `synth_thread_limit` for maximum parallelization
 
 If under a configuration the task is stuck, it is safe to simply stop the servers and restart with a larger `synth_memory_limit` to run the rest of the task.
+
+
+### Where to find partial results
+If there is not enough memory or time to finish all the tasks, you can find partial results under those folders:
+- `outputs/cache/StrPROSE/`: The synthesis results for `strprose` benchmark
+- `outputs/cache/StrSTUN/`: The synthesis results for `strstun` benchmark
+- `outputs/cache/SynGuar/`: The trace and final results of the finished runs of the `SynGuar` algorithm (for both `strprose` and `strstun` benchmarks)
+
 ## Step 4: Collect data
 
 After the above evaluation requests are finished, run the following commands to collect results and output to `./outputs/summaries` (requires `server-synth.py` and `server-synguar.py` to be up and running).

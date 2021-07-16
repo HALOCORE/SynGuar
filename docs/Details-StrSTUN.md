@@ -54,6 +54,57 @@ To run the tool interactively (providing examples from standard input):
 ./build-strstun/strstun
 ```
 
+Then input function signature and examples. For example, if the target function has type `Str->Int->Str`, Input `Str`, `Int` and `Str` with an empty line in the end. An example of the log on the command line is the following:
+```
+union@LAPTOP-FROTK2SG:~/git_repos/StrProgSyn-SynGuar$ ./build-strstun/strstun
+BEGIN Input Function Signature (one line for each paramater/return value's type, end with an empty line):
+Str
+Int
+Str
+
+END Input Function Signature
+[synthesizer] clearForAddingExamples.
+BEGIN Add Bootstrap Example 0
+PAUSE Input Param 0:
+hello
+PAUSE Input Param 1:
+2
+PAUSE Output:
+llo
+END Add Bootstrap Example 0
+[synthesizer] addExample new. (hello)(2) -> (llo)
+PAUSE Add More Example (y/n):
+n
+# SYNTHESIS for goalDepth: 2
+[synthesizer] finishAddingExamples. #example = 1
+[SearcherSizeEnumeration] == currentSize: 2
+...
+...
+...
+
+# GoalGraphManager::buildCondGraph. RootGoal Solution Count:
+... [solutionCountByLevel size:3 ([0]:1411, [1]:262126890452448, [2]:64653130518141558333372012, )]]
+# GoalGraphManager::buildCondGraph. Upper bound of H after synth: 64653130518403685223825871
+
+# StrSTUNSynthesizer::synthesis GG TIME: 0.0018366
+
+...
+
+======================
+FOUND
+BEGIN Synthesize Result
+SYNFUNC :: Str -> Int -> (Str);
+SYNFUNC input0 input1 = (str.substr input0 input1 (str.len input0));
+
+END Synthesize Result
+[synthesizer-stat] syntaxSize=5 syntaxDepth=3
+
+[synthesizer-stat] total time: 0.222961 seconds.
+[synthesizer-stat] total memory: VM=23236.000000; RSS=12676.000000
+```
+
+The output contains the synthesized program and the size of the hypothesis space.
+
 ### Nont-interactive (from files)
 To run the tool with example files and syntax constraint files, please provide arguments to it:
 

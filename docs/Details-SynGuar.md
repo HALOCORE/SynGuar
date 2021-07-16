@@ -50,6 +50,8 @@ python3 server-synguar.py --config ./server-config-512g-16thread.json
 An example of a config file is at `./SynGuar/server-config-512g-16thread.json`. The unit for `synth_memory_limit` is in **MB**. `synth_thread_limit` and `synguar_thread_limit` are suggested to set to the same number, and 
 `synguar_thread_limit` should divide `synth_memory_limit`.
 
+**Notice**: `server-synth.py` will monitor the memory usage of each subprocess and make sure the total memory usage is under `synth_memory_limit`. For example, with `synth_memory_limit=24GB` and `synth_thread_limit=6`, It will try each synthesis job with 24/6=4GB memory and kill the process that exceeds 4GB. Then it will try those out-of-memory jobs with 8GB, then 16GB, and finally, 24GB. For those jobs that are still OOM with 24GB, they will be marked in red in the waiting list on the monitoring dashboard mentioned below.
+
 After the server starts, go to the following link for monitoring server status (such as memory usage and waiting tasks):
 - Monitoring `server-synth.py`:  http://localhost:5265/ui/synth/dashboard.html
 - Monitoring `server-synguar.py`:  http://localhost:5265/ui/synguar/dashboard.html
@@ -91,6 +93,30 @@ The long-running `server-synguar.py` accepts `synguar` API call, and query `serv
 
   Duplicated requests will be automatically ignored. After the `SynGuar` algorithm for the request terminates, the above request will return the final result and the trace of the algorithm. 
 
+  The finished request is also cached at `./outputs/cache/SynGuar`. For example, the trace of the above request will be saved in a file `StrPROSE$prog1.seed1010.csv$0.05$0.02$1.json`:
+  ```
+  {
+  "middle_steps": {
+    "1": {
+      "hs": [
+        "1095706518507364554730072"
+      ],
+      "program": "ConstStr(\"n9lqqkl\")",
+      "valid_hs": true,
+      "phase1_n_limit": [
+        1029.828372080242
+      ],
+      "current_bound": [
+        2216
+      ]
+    },
+    "2": {
+      "hs": [
+        "2081278472798"
+      ],
+      ...
+    ```
+
   The meaning of $\epsilon$, $\delta$ and $k$ are explained in the full paper. Briefly, $\epsilon$ and $\delta$ are parameters for generalization: with probability at least $1-\delta$, the synthesized program has true error smaller than $\epsilon$ on the sampling distribution. $k$ is the granularity of taking I/O examples in the `SynGuar` algorithm. For example, set $k = 1$ the SynGuar algorithm will take I/O examples one by one.
 
 ### Submit single synthesis task to `server-synth.py`
@@ -114,4 +140,6 @@ The long-running `server-synth.py` accepts `synth` API call, and spawn workers t
 
   Duplicated requests will be automatically ignored. After the synthesis job is finished, the result will appear in the response data for the above request.
 
-  The request above means to spawn a `StrPROSE` synthesizer process to synthesize a program with program space counting on the first 28 examples from the file `prog1.seed1029.csv`, and after the result is ready, the spawned process will be killed after 12 seconds without new incoming synthesis requests for this process. 
+  The request above means to spawn a `StrPROSE` synthesizer process to synthesize a program with program space counting on the first 28 examples from the file `prog1.seed1029.csv`, and after the result is ready, the spawned process will be killed after 12 seconds without new incoming synthesis requests for this process. The cached result can be found under the `./outputs/cache/StrPROSE` folder. 
+
+  Similarly, the cached result for `StrSTUN` synthesizer can be found under the `./outputs/cache/StrSTUN` folder. 

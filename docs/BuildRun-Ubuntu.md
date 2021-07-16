@@ -35,3 +35,5 @@ See [Details-SynGuar.md](./Details-SynGuar.md) for detailed installation process
 To run the evaluation, please see [Evaluation.md](./Evaluation.md).
 
 To run the synthesizers manually, please see [Details-StrPROSE.md](./Details-StrPROSE.md) and [Details-StrSTUN.md](./Details-StrSTUN.md).
+
+To run the SynGuar algorithm with specified synthesizer on i.i.d. samples, see [Details-SynGuar.md](./Details-SynGuar.md).

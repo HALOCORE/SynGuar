@@ -3,7 +3,11 @@
 
 > This is the artifact for the [paper](./AcceptedPaper.pdf) *SynGuar: Guaranteeing Generalization in Programming by Example* accepted by ESEC/FSE 2021.
 
+### Benchmark Exploration Demo
 
+https://www.comp.nus.edu.sg/~wangbo20/synguar/webui/demo/index.html
+
+## Overview
 
 This repo is a program synthesis framework that provides PAC-style generalization guarantee while doing PBE program synthesis on i.i.d. samples. The top-level is the `SynGuar` algorithm that decides sufficient sample size for <img src="https://render.githubusercontent.com/render/math?math=%28%5Cepsilon%2C+%5Cdelta%29"/>-generalization based on the size of hypothesis space calculated by the program synthesizer after seeing some I/O examples. 
 

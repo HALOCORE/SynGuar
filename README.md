@@ -5,9 +5,9 @@
 
 
 
-This repo is a program synthesis framework that provides PAC-style generalization guarantee while doing PBE program synthesis on i.i.d. samples. The top-level is the `SynGuar` algorithm that decides sufficient sample size for $(\epsilon, \delta)$-generalization based on the size of hypothesis space calculated by the program synthesizer after seeing some I/O examples. 
+This repo is a program synthesis framework that provides PAC-style generalization guarantee while doing PBE program synthesis on i.i.d. samples. The top-level is the `SynGuar` algorithm that decides sufficient sample size for <img src="https://render.githubusercontent.com/render/math?math=%28%5Cepsilon%2C+%5Cdelta%29"/>-generalization based on the size of hypothesis space calculated by the program synthesizer after seeing some I/O examples. 
 
-Here $(\epsilon, \delta)$-generalization means with probability at least $1-\delta$, the synthesized programv $f$ has true error $\mathop{\mathbb{E}}[\mathbb{I}[f(x) \neq c(x)]]$ smaller than $\epsilon$ with respect to the target function $c$ on the distribution $D$ where the I/O examples are sampled from. See [SynGuar-algorithm](./docs/proofs/proofs.pdf) for details about this algorithm. 
+Here <img src="https://render.githubusercontent.com/render/math?math=%28%5Cepsilon%2C+%5Cdelta%29"/>-generalization means with probability at least <img src="https://render.githubusercontent.com/render/math?math=1-%5Cdelta"/>, the synthesized program <img src="https://render.githubusercontent.com/render/math?math=f"/> has true error <img src="https://render.githubusercontent.com/render/math?math=%5Cmathbb%7BE%7D%5B%5Cmathbb%7BI%7D%5Bf%28x%29+%5Cneq+c%28x%29%5D%5D"/> smaller than <img src="https://render.githubusercontent.com/render/math?math=%5Cepsilon"/> with respect to the target function <img src="https://render.githubusercontent.com/render/math?math=c"/> on the distribution <img src="https://render.githubusercontent.com/render/math?math=D"/> where the I/O examples are sampled from. See [SynGuar-algorithm](./docs/proofs/proofs.pdf) for details about this algorithm. 
 
 ![how-synguar-works](./docs/figures/how-synguar-works.png)
 

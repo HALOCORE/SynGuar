@@ -117,7 +117,7 @@ The long-running `server-synguar.py` accepts `synguar` API call, and query `serv
       ...
     ```
 
-  The meaning of $\epsilon$, $\delta$ and $k$ are explained in the full paper. Briefly, $\epsilon$ and $\delta$ are parameters for generalization: with probability at least $1-\delta$, the synthesized program has true error smaller than $\epsilon$ on the sampling distribution. $k$ is the granularity of taking I/O examples in the `SynGuar` algorithm. For example, set $k = 1$ the SynGuar algorithm will take I/O examples one by one.
+  The meaning of <img src="https://render.githubusercontent.com/render/math?math=%5Cepsilon"/>, <img src="https://render.githubusercontent.com/render/math?math=%5Cdelta"/> and <img src="https://render.githubusercontent.com/render/math?math=k"/> are explained in the full paper. Briefly, <img src="https://render.githubusercontent.com/render/math?math=%5Cepsilon"/> and <img src="https://render.githubusercontent.com/render/math?math=%5Cdelta"/> are parameters for generalization: with probability at least <img src="https://render.githubusercontent.com/render/math?math=1-%5Cdelta"/>, the synthesized program has true error smaller than <img src="https://render.githubusercontent.com/render/math?math=%5Cepsilon"/> on the sampling distribution. <img src="https://render.githubusercontent.com/render/math?math=k"/> is the granularity of taking I/O examples in the `SynGuar` algorithm. For example, set <img src="https://render.githubusercontent.com/render/math?math=k+%3D+1"/> the SynGuar algorithm will take I/O examples one by one.
 
 ### Submit single synthesis task to `server-synth.py`
 The long-running `server-synth.py` accepts `synth` API call, and spawn workers to do them.
